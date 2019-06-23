@@ -25,4 +25,9 @@ public class HashMapNode<K, V> {
     public V getValue() {
         return this.value;
     }
+
+    @Override
+    public String toString() {
+        return "{"+ this.key + "=" + this.value + "}";
+    }
 }

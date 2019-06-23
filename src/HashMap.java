@@ -1,9 +1,17 @@
+import java.util.*;
+
 public class HashMap<K, V> {
     private HashMapNode<K, V>[] myMap = new HashMapNode[10];
     private int indexFound = -1;
+    private int size=0;
+
+    private HashSet<K> keySet= new HashSet<>();
+    private LinkedList<V> values= new LinkedList<>();
 
 
     public void put(K key, V value) {
+        keySet.add(key);
+        values.add(value);
         HashMapNode<K, V> entry = new HashMapNode(key, value, null);
         int index = entry.index();
 
@@ -22,6 +30,8 @@ public class HashMap<K, V> {
                 myMap[index].next = entry;
             }
         }
+
+        size++;
 
     }
 
@@ -52,7 +62,11 @@ public class HashMap<K, V> {
     }
 
     public void remove(K key) {
+        keySet.remove(key);
+
         V value = get(key);
+        values.remove(value);
+
         if (value == null) return;
 
         if (myMap[indexFound].getKey() == key) {
@@ -81,6 +95,26 @@ public class HashMap<K, V> {
                 previousNode = previousNode.next;
             } while (currentNode != null);
         }
+        size--;
+    }
+
+    public void clear(){
+        for(HashMapNode node: myMap){
+            node=null;
+            size=0;
+        }
+    }
+
+    public int size(){
+        return size;
+    }
+
+    public HashSet<K> keySet(){
+        return keySet;
+    }
+
+    public LinkedList<V> values(){
+        return values;
     }
 
     @Override
